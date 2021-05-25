@@ -1,0 +1,261 @@
+输入部分 格式处理 预处理 输入处理 生成部分 输出部分
+
+
+一个 MPEG-4兼容的人脸动画系统
+驱动方式
+FAP(脸部动画参数)驱动
+
+在动画阶段 ,人脸对象通过一个叫脸部动画参
+数 ( facial anima tio n parameter, FAP)的流来驱动.
+FAP操纵人脸网格模型上的一些特征点来产生可
+视音素和各种表情 .利用 FAP来控制远程终端上的
+人脸对象 ,即可获得实时的、高度真实感的场景序
+列 ,这样就避免了每一帧都要传输人脸图像 .
+
+FDP脸部定义参数 ( facial definitio n parameter, FDP)来
+初始化私有的人脸模型 .这样编码端希望的人脸的
+纹理信息和几何信息都可以表示出来
+[2, 7 ]
+.
+根据使用 FDP数据的方式的不同 ,一个人脸动
+画系统可以分成如下 4种工作方式:
+( 1) 不使用 FDP(只有 FAP信息 ).解码端接收
+到的 FAP流用于控制未经校准的私有模型.因为
+FAP使用 FAPU作为单位 ,所以即使没有经过校准
+也能产生不错的结果.
+( 2) 只使用特征点. FDP中包含图 2所示的特
+征点 ,这些特征点用来校准解码端的私有模型 ,然后
+使用 FAP控制校准过的人脸模型.这样编码端可以
+部分预知动画的结果.
+( 3) 使用特征点和纹理信息 . FDP中除了包含
+特征点 ,还有纹理图和特征点对应的纹理坐标.
+( 4) 使用脸部动画表 ( facial animatio n table,
+FAT)和三维模型 .一个新的三维模型从编码端传
+
+图3
+
+
+基于三维动画的虚拟人物表情动作系统设计
+数据驱动
+图1
+人体骨骼数据
+面片模型
+
+基于三维动画的虚拟人物表情动作合成系统设计
+驱动 人脸检测 人脸面部表情的特征点检测
+
+造成虚拟人物表情动作合成难度较大的主要原因
+是人脸面部在进行表情表现时的复杂性和多样性。人
+脸表情不仅受人脸面部器官的配合影响，同时人脸的皮
+肤、面部纹理都会对表情的表达造成影响。
+
+搭建表情数据库
+提取人脸表情特征
+人脸三维重建
+
+三维虚拟人脸表情的整体架构
+以三维动画为基础依据的虚拟人物表情动作合成，
+主要是通过以下三个步骤完成。
+1）对人脸的特征点进行非刚性的标记。该过程需
+要通过以局部限制的模型为基础依据的人脸特征的检
+测算法实现，人脸的图像数据输入完成之后，该算法对
+人脸图像特征进行整合，同时标记相应的二维图像的特
+征点。
+2）进行人脸的三维模型重建，在对人脸图像数据
+做出相应的特征点检测以及标记之后，通过人脸的三维
+模型重建算法对处理好的人脸面部表情图像建立相应
+的三维模型。
+3）通过表情迁移实现虚拟化身的建立，也即进行
+人脸面部表情的动作合成。通过表情迁移的相应动作，
+将人脸面部的相应形状以及外观动作迁移到对应的虚
+拟化身。
+
+人脸面部表情的特征点检测
+
+
+基于改进ＣｙｃｌｅＧａｎ模型和区域分割的表情动画合成
+
+。目前，表情合成的
+主要方式 有：１）手工编辑人脸模型，生 成 一 帧 帧 的 新 表 情；
+２）将源表情传递到目标人脸，在目标人脸上重现该表情；３）融
+合已有的表情样本，生 成 新 表 情。第一种方式允许对已有的
+源表情数据进行任意编辑，但 耗 时、耗 力，且 对 操 作 人 员 的 专
+业技术要求较高。第二种和第三种方式需要借助表情数据源
+来驱动，合成的新表情数目和质量受限于已有的源表情数据
+规模，且合成的表情真实感通常不高，尤 其 在 处 理 语 音 视 频
+时，往往难以实现表情重现与源视频中音频的同步。
+
+目前已有的人脸表情合成方法很多，主要分为两大类：基
+于三维网格模型的人脸表情合成和基于二维图像的人脸表情
+合成。
+
+Ｐｉｇｈｉｎ等［２］提出了具有逼真纹理的三维人脸建模
+的表情合成系统。
+Ｂｌａｎｚ等［３］提出了从单张图片或视频中恢
+复人脸的三维模型，尝试从带纹理的三维模型中进行表情合
+成，但创建一个好的模型相当困难，因为必须对面部的所有细
+节进行建模，如 眼 睛、头 发、牙 齿 等。
+Ｖｌａｓｉｃ等［４］提 出 的 多 线
+性模型（ＭｕｌｔｉｌｉｎｅａｒＭｏｄｅｌｓ）将分离参数化不同的属性（如 顶
+点信息、形状、视位、表情 等）建立在同一个数据张量空间中，
+这些属性之间用笛卡尔积来构造并且相互独立。将这些独立
+属性参数进行任意组合，最终得到不同的人脸表情。
+Ｌｖ等［５］
+提出一种面向同一人脸表情转移的方法，即对目标人脸进行
+三维建模，生成特定的ｂｌｅｎｄｓｈａｐｅ模型，利用该模型生成与输
+入人脸图像匹配的三维人脸模型，并对图像进行扭曲融合，生
+成所需的目 标 人 脸 图 像。
+Ｐａｓｑｕａｒｉｅｌｌｏ等［６］在三维人脸模型
+中加入皱纹等细节因素，将人脸模型进行网格化，并按照人的
+生理结构将人脸分成嘴、眼睛、眉毛、额头等区域，使得每一区
+域的网格数量和拓扑等都不同，进而实现表情的模拟。
+Ｚｈａｎｇ
+等［７］在三维形变模型中也加入了皱纹等细节，将其划 分 为１４
+个子区域，避免了表情皱纹超过分区的边界。
+Ｊｏｓｈｉ等［８］提出
+的基于物理的分割方法可以自动将人脸分割成多个区域，每
+一个区域都表示成混合形状（ｂｌｅｎｄｓｈａｐｅ）的 线 性 组 合，从 混
+合形状中学习约 束 条 件 和 参 数。
+Ｐａｒｋ等［９］将给定的每一个
+源关键模型分成３个子区域，每一个子区域都包含人脸的 关
+键特征，实现了面部表情的合成。
+Ｊｏｓｈｉ［１０］把每一个表情看成
+其他表情的线性组合，通过改变这些线性组合的权重来合成
+比较完整的面部表情。
+Ｇａｒｒｉｄｏ［１１］提出了一种基于图像的人
+脸视频再现方法，对于输入的两个不同人脸的面部表情视频，
+将源序列的表情传递给目标序列，同时尽可能地保留灯光、背
+景等因素。该方法的缺点是：需要一些特定的人脸数据库，且
+依赖于输入图像的一些表情信息，如是否是中性人脸或者有
+无标记点等等。
+文献［１２－１３］首先对人脸进行建模，然后得到
+特定用户 的 ｂｌｅｎｄｓｈａｐｅ模 型，进 而 求 解 出 ｂｌｅｎｄｓｈａｐｅ系 数，
+最后通过对系数的改变来合成目标表情。
+Ｈｕａｎｇ等［１４］提 出
+了基于非联合学习的人脸表情合成方法：通过一种无监督回
+归的算法，将具有相同属性的三维人脸模型映射到同一个低
+维空间，对其进行重建，实现人脸表情的合成。
+
+（２）基于二维图像的方法：用已知的表情数据来合成新的
+表情，或者直接将已有的表情传 递到目标图像上。
+ Ｗｉｌ－
+ｌｉａｍｓ［１５］提出通过表情映射的方法来合成新的目标表情，首先
+提取两幅图像不同的面部特征，然后计算特征之间的矢量差，
+最后利用特征向量来进行图像的扭曲。该方法虽然实现了不
+同表情之间的转换，但是不适用于戴眼镜和头部位姿有较大
+变化的情况。
+Ｙａｎｇ等［１６］提出了基于表情流的方法：首 先 提
+取两幅图像的特征点并分别进行三维人脸重建；然后计算两
+个三维模型之间的差异，将差异映射到二维图像上得到表情
+流，再利用所得表情流进行图像扭曲；最后进行图像融合［１７］。
+表情流的计算方法往往比较复杂，鲁棒性很差，得到的效果不
+是很逼真，而且只能在同一人脸之间进行，不具有普遍性。
+文
+献［１８－１９］提出了一种人脸图像自动替换系统：首先对输入图
+像进行人脸检测；然后将提取的每个人脸进行对齐，并从大量
+的人脸数据库中找到与其相近的人脸；最后通过图像融合实
+现目标输入图像的表情合成。这些方法可以有效、快 捷 地 合
+成人脸表情，但由于人脸具有特异性，且表情复杂、丰富，在表
+情合成过程中合成具有真实感的表情比较困难。
+
+本文提出一种基 于 改 进 ＣｙｃｌｅＧａｎ模型和区域分割思想
+的人脸表情合成 方 法。在 ＣｙｃｌｅＧａｎ模型的循环一致损失函
+数中引入新的协方差约束条件，用来约束源图像（或 目 标 图
+叶亚男，等：基于改进 ＣｙｃｌｅＧａｎ模型和区域分割的表情动画合成 ３４１像）和重建后的源图 像（或 目 标 图 像）之 间 的 误 差。新 约 束 条
+件既可避免在大数据样本下将全部源图像转换成同一目标图
+像，又可避免在转换过程中出现色彩异常和模糊不清等现象，
+从而有效提高了表情合成的精度。为进一步提高人脸表情转
+换模型的鲁棒性和真实感，本文引入了区域分割的思想，即根
+据人脸的几何结构及脸部不同区域的表情变化特点，将输入
+的源人脸图像分割成左眼、右眼、嘴部和剩余人脸部分共４块
+区域，单独对每块区域进行训练，将所得的分块结果图进行加
+权融合，最终得到完整、真实自然的目标人脸表情图像
+
+Real-time Facial Animation for Untrained Users 
+
+The idea of using motion capture to track facial landmarks that are used to create realistic 
+animations of an actor’s facial expression on a digital model is a widely used technique for 
+modern movies and video games. This can be achieved by using active or passive tracking of 
+facial markers with a head mounted camera(s). As with standard motion capture the data 
+collected from the facial capture is then transferred to a model to be animated. This is often an 
+offline process compared to a useful real-time process. 
+A more readily available method to facial expression capture would allow the general public 
+easier access to the technology and thus use it in many ways, such as input to a video game 
+and video calls to friends and family. It could also be used in the production of independent 
+video games and movies where they don't have access to the expensive systems that the 
+current studios use. 
+Other more practical solutions to real time facial animation have been developed using a 
+passive tracking method by using RGBD cameras instead, such as the Microsoft's Kinect 
+camera (Weise et al., 2011). But this is limited as conventional users normally only have 
+access to a standard RGB web camera/ camera.
+With the increasing image quality of general purpose cameras and computational power of 
+consumer hardware, these techniques can be adapted for consumer-level use, only requiring 
+a single RGB camera for input. (Cao et al., 2013) (Weng et al., 2013). These solutions often 
+work by taking 2D landmark position of the input face and matching them to a 3D 
+blendshape model which is then used to control the model of the character. 
+These solutions to real time facial animation give accurate results, but have some problems 
+that could reduce the accuracy of the output, such as the current lighting of the person’s face. 
+I also find that both these solutions require a per-user training session before the system can 
+be used. This increases the time required for the setup of the system, which I believe is 
+unnecessary time that could be avoidable. 
+(Cao, Hou and Zhou, 2014) have recently developed a system that can detect facial 
+expressions to a higher accuracy than previous real time solutions without the need for time 
+consuming per person training.
+This system still has its limitations, as mentioned in the conclusion of the paper related to the 
+system. Including the problem of occlusions to the face with prolonged occlusion causing the 
+system to lose overall accuracy (Cao, Hou and Zhou, 2014, p.9). However, by implementing 
+a new way for facial tracking and animation, the system has lost performance compared to Real-time Facial Animation for Untrained Users 
+4
+previous solutions, meaning it couldn't be used on devices with a lower computational 
+budget or/and lower image quality like a mobile phone or tablet.
+Hence, being able to have a performance based facial animation system that has a low 
+computational time and high accuracy tracking, without the need for time consuming per 
+person setup, is useful for both consumer level applications and for the movie/video game 
+industry applications.
+
+
+Capture, Learning, and Synthesis of 3D Speaking Styles
+
+Input: speech signal and 3D template Output: 3D character animation
+
+Audio-driven
+
+Speech-driven facial animation:
+Text-driven facial animation: 
+Performance-based facial animation: 
+
+Learning to Regress 3D Face Shape and Expression
+from an Image without 3D Supervision
+
+**
+Interactive facial animation with deep neural networks
+Related work
+
+
+Example-Based Facial Animation of Virtual Reality Avatars using Auto-Regressive Neural Networks
+
+ example-based and neural
+animation methods
+
+
+End-to-end Learning for 3D Facial Animation from Raw Waveforms of Speech
+
+We present a deep learning framework for realtime speech-driven 3D facial animation from just raw waveforms. Our deep neural network directly maps an input
+sequence of speech audio to a series of micro facial action
+unit activations and head rotations to drive a 3D blendshape
+face model. In particular, our deep model is able to learn the
+latent representations of time-varying contextual information
+and affective states within the speech. Hence, our model not
+only activates appropriate facial action units at inference to
+depict different utterance generating actions, in the form of
+lip movements, but also, without any assumption, automatically
+estimates emotional intensity of the speaker and reproduces her
+ever-changing affective states by adjusting strength of facial unit
+activations. For example, in a happy speech, the mouth opens
+wider than normal, while other facial units are relaxed; or in
+a surprised state, both eyebrows raise higher. Experiments on
+a diverse audiovisual corpus of different actors across a wide
+range of emotional states show interesting and promising results
+of our approach. Being speaker-independent, our generalized
+model is readily applicable to various tasks in human-machine
+interaction and animation
