@@ -1,0 +1,5 @@
+\contentsline {section}{\numberline {1}\hei 实验目的}{3}{section.1}%
+\contentsline {section}{\numberline {2}\hei 实验环境}{3}{section.2}%
+\contentsline {section}{\numberline {3}\hei 人脸模型}{3}{section.3}%
+\contentsline {section}{\numberline {4}\hei 动画系统}{3}{section.4}%
+\contentsline {section}{\numberline {5}\hei 运行演示}{7}{section.5}%
